@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/cars/:id', carsRouter);
+app.use('/cars', carsRouter);
 
 app.use('/user/:id', function(req, res, next) {
     console.log('Request Type:', req.params);

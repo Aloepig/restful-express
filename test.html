@@ -36,6 +36,7 @@
         <div class="jumbotron">
             <div id="result"></div>
             <a id="button1" class="btn btn-default">GET users</a>
+            <span>CAR ID</span><input id="carid" value="20200508B2C010011012360169">
             <a id="button2" class="btn btn-default">Get cars</a>
         </div>
 
@@ -52,7 +53,7 @@
     <script>
         $(function() {
             const usersUrl = "http://localhost:3000/users";
-            const carsUrl = "http://localhost:3000/cars/20200508B2C010011012360169";
+            const carsUrl = "http://localhost:3000/cars/";
 
             $("#button1").click(function() {
                 // fetch(usersUrl, {
@@ -74,7 +75,7 @@
 
             $("#button2").click(function() {
                 $.ajax({
-                    url: carsUrl,
+                    url: carsUrl.concat($("#carid").val()),
                     type: "GET",
                     dataType: "json"
                 }).done(resjson => {
