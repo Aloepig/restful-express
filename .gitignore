@@ -1,0 +1,2 @@
+#npm에서 설치한 페키지를 무시한다.
+node_modules
