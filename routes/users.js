@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
         } else {
             let resJson = { "users": rows };
             res.json(resJson);
-            console.log(resJson);
+
+            console.log("[log] res.json:", resJson);
         }
 
     });

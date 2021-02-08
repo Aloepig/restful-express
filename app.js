@@ -3,43 +3,35 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
-// Router 설정
+// ROUTER
 const fintechRouter = {
-    "dev": {
-        "indexRouter": require('./routes/index'),
-        "userRouter": require('./routes/users'),
-        "carsRouter": require('./routes/cars')
-    },
-    "product": {
-
-    }
-};
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+    indexRouter: require('./routes/index'),
+    usersRouter: require('./routes/users'),
+    carsRouter: require('./routes/cars')
+}
 
 let app = express();
-
-switch (app.get('env')) {
-    case "development":
-        break;
-    case "product":
-        break;
-    default:
-        break;
-}
 
 console.log("--------------------------");
 console.log("NODE_ENV: ", app.get('env'));
 console.log("--------------------------");
 
-// CORS 설정
-app.all('/*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
+// CORS
+switch (app.get('env')) {
+    case "development":
+        app.use(cors({
+            origin: "192.168.0.1",
+            credentials: true
+        }));
+        break;
+    case "product":
+        app.use(cors());
+        break;
+    default:
+        break;
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,9 +43,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-// app.use('/cars', carsRouter);
+app.use('/', fintechRouter.indexRouter);
+app.use('/users', fintechRouter.usersRouter);
+app.use('/cars', fintechRouter.carsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
