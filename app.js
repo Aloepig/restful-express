@@ -4,25 +4,28 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-
-// ROUTER
-const fintechRouter = {
-    indexRouter: require('./routes/index'),
-    usersRouter: require('./routes/users'),
-    carsRouter: require('./routes/cars')
-}
+const fs = require('fs');
 
 let app = express();
 
-console.log("--------------------------");
-console.log("NODE_ENV: ", app.get('env'));
-console.log("--------------------------");
+console.log("-----------------------------------------");
+console.log("[app.js] app.get('evn'): ", app.get('env'));
+console.log("-----------------------------------------");
+
+const https = require('https');
+const httpsOptions = {
+    key: fs.readFileSync(__dirname + '/ssl/test.pem'),
+    cert: fs.readFileSync(__dirname + '/ssl/test.crt')
+}
+
+https.createServer(httpsOptions, app).listen(443);
+
 
 // CORS
 switch (app.get('env')) {
     case "development":
         app.use(cors({
-            origin: "192.168.0.1",
+            origin: "192.168.0.107",
             credentials: true
         }));
         break;
@@ -31,6 +34,13 @@ switch (app.get('env')) {
         break;
     default:
         break;
+}
+
+// ROUTER
+const fintechRouter = {
+    indexRouter: require('./routes/index'),
+    usersRouter: require('./routes/users'),
+    carsRouter: require('./routes/cars')
 }
 
 // view engine setup
