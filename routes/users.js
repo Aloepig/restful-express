@@ -1,4 +1,6 @@
-let connection = require('../database/db_nhcok');
+let fintechDb = require('../database/fintech_db');
+let connection = fintechDb.dbNhcok;
+
 var express = require('express');
 var router = express.Router();
 

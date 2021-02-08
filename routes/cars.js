@@ -1,11 +1,12 @@
-const connection = require('../database/db_lenket');
+let fintechDb = require('../database/fintech_db');
+let connection = fintechDb.dbLenket;
 const express = require('express');
 let router = express.Router();
 
-router.get('/', function(req, res, next) {
-    const selectQuery = 'select * from tm_mydata_carinfo_mst where svc_req_no="20200508B2C010011012360169"';
+router.get('/:id', function(req, res, next) {
+    const selectQuery = 'select * from tm_mydata_carinfo_mst where svc_req_no="'.concat(req.params.id).concat('"');
 
-    console.log(req.params);
+    console.log("[log] req.param:", req.params);
 
     connection.query(selectQuery, function(err, rows, fields) {
         if (err) {
@@ -13,7 +14,8 @@ router.get('/', function(req, res, next) {
         } else {
             let resJson = { "cars": rows };
             res.json(resJson);
-            console.log(resJson);
+
+            console.log("[log] res.json:", resJson);
         }
 
     });

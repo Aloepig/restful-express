@@ -4,20 +4,35 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-// Router 부분
+// Router 설정
+const fintechRouter = {
+    "dev": {
+        "indexRouter": require('./routes/index'),
+        "userRouter": require('./routes/users'),
+        "carsRouter": require('./routes/cars')
+    },
+    "product": {
+
+    }
+};
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const carsRouter = require('./routes/cars');
-
-// DB 설정
-const dbNhcok = require('./database/db_nhcok');
-const dbLenket = require('./database/db_lenket');
-
-// app 동작시 계속 연결
-dbNhcok.connect();
-dbLenket.connect();
 
 let app = express();
+
+switch (app.get('env')) {
+    case "development":
+        break;
+    case "product":
+        break;
+    default:
+        break;
+}
+
+console.log("--------------------------");
+console.log("NODE_ENV: ", app.get('env'));
+console.log("--------------------------");
 
 // CORS 설정
 app.all('/*', function(req, res, next) {
@@ -38,12 +53,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/cars', carsRouter);
-
-app.use('/user/:id', function(req, res, next) {
-    console.log('Request Type:', req.params);
-    next();
-});
+// app.use('/cars', carsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
