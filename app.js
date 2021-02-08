@@ -40,7 +40,8 @@ switch (app.get('env')) {
 const fintechRouter = {
     indexRouter: require('./routes/index'),
     usersRouter: require('./routes/users'),
-    carsRouter: require('./routes/cars')
+    carsRouter: require('./routes/cars'),
+    testsRouter: require('./routes/tests')
 }
 
 // view engine setup
@@ -54,8 +55,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', fintechRouter.indexRouter);
+app.use('/*', function(req, res, next) {
+    console.log(req.hostname);
+    next();
+})
 app.use('/users', fintechRouter.usersRouter);
 app.use('/cars', fintechRouter.carsRouter);
+app.use('/tests', fintechRouter.testsRouter)
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
