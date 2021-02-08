@@ -6,4 +6,4 @@ GET https://localhost:3000/users
 
 ####
 
-GET http://localhost:3000/cars/12344
+GET https://localhost/tests/1
