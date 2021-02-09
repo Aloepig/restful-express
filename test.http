@@ -1,9 +1,26 @@
+### http NH DB 테스트
 GET http://localhost:3000/users
 
-####
-
+### https NH DB 테스트
 GET https://localhost:3000/users
 
-####
+### https 테스트
+GET https://192.168.0.107
 
+### http & params 테스트
 GET https://localhost/tests/1
+
+### https & params 테스트
+GET http://localhost:3000/tests/2
+
+### https & POST JSON 테스트
+POST https://localhost/login
+content-type: application/json
+
+{
+    "email": "sample@fintech1.co.kr",
+    "passwd": "fintech"
+}
+
+### Oauth2 테스트
+GET http://localhost:3000/auth/example

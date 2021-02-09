@@ -5,7 +5,7 @@ router.get('/:id', function(req, res, next) {
 
     switch (req.params.id) {
         case "1":
-            res.send({ text: "IP", hostname: req.hostname });
+            res.send({ text: "hostname", hostname: req.hostname });
             break;
         case "2":
             res.send({ text: "url", ip: req.url });
