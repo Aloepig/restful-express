@@ -108,23 +108,6 @@ server.grant(oauth2orize.grant.code(function(client, redirectURI, user, ares, do
         return done(null, code);
     });
 }));
-app.get('/dialog/authorize',
-    login.ensureLoggedIn(),
-    server.authorize(function(clientID, redirectURI, done) {
-        Clients.findOne(clientID, function(err, client) {
-            if (err) { return done(err); }
-            if (!client) { return done(null, false); }
-            if (client.redirectUri != redirectURI) { return done(null, false); }
-            return done(null, client, client.redirectURI);
-        });
-    }),
-    function(req, res) {
-        res.render('dialog', {
-            transactionID: req.oauth2.transactionID,
-            user: req.user,
-            client: req.oauth2.client
-        });
-    });
 
 // ROUTER
 const fintechRouter = {
